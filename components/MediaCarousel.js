@@ -61,6 +61,7 @@ export default function MediaCarousel(props) {
                 onClick={() => {
                   fetchSimilarMedia(`https://api.themoviedb.org/3/movie/${item.id}/recommendations?api_key=631627e688738d84a1cae51aa035b23a`)
                   state.setCurrentMedia(item)
+                  localStorage.setItem("currentMedia", JSON.stringify(item))
                   state.setVisible(true);
                 }}
               >

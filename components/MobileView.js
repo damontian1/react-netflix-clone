@@ -7,16 +7,16 @@ export default function MediaSelected(props) {
   const state = useAppContext();
 
   return (
-    <div className="bg-black">
+    <div className="bg-black pb-16">
       <div style={{ backgroundImage: "-webkit-linear-gradient(top,rgba(0,0,0,.7) 30%,rgba(0,0,0,0))" }} className="absolute h-32 top-0 w-full z-30"></div>
       <MobileHeader />
       <div style={{ height: "400px" }} className="h-full w-full inset-0 relative text-white mb-8">
         <img src="/react-netflix-clone/banner.jpg" alt="" className="h-full w-full object-cover" />
         <div className="absolute bg-gradient-to-t bottom-0 from-black h-40 w-full z-0"></div>
         <div className="-translate-y-1/2 absolute max-w-md px-5 top-2/3 transform">
-          <img src="/react-netflix-clone/logo-film.png" alt="" className="w-20 mb-4" />
-          <h1 className="font-extrabold text-5xl mb-4 leading-10">Shadow and Bone</h1>
-          <p className="leading-tight mb-4">Dark forces conspire against orphan mapmaker Alina Starkov when she unleashes an extraordinary power that could change the fate of her war-torn world.</p>
+          <img src="/react-netflix-clone/logo-film.png" alt="" className="w-20 mb-2" />
+          <h1 className="font-extrabold text-4xl mb-4 leading-10">Shadow and Bone</h1>
+          <p className="leading-tight mb-10">Dark forces conspire against orphan mapmaker Alina Starkov when she unleashes an extraordinary power that could change the fate of her war-torn world.</p>
           <div className="flex space-x-2">
             <button className="flex items-center px-7 py-2 space-x-2.5 bg-white rounded-md text-black">
               <svg className="w-3 h-3 fill-current" viewBox="0 0 448 513">

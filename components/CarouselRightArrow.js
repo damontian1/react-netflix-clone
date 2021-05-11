@@ -14,7 +14,7 @@ export default function CarouselRightArrow({ onClick, ...rest }) {
       onMouseEnter={() => setIsShown(true)}
       onMouseLeave={() => setIsShown(false)}
       onClick={() => onClick()}
-      className="flex items-center justify-center rounded-md right-0 z-10 w-8 md:w-10 lg:w-12"
+      className="flex items-center justify-center sm:rounded-md right-0 z-10 w-8 md:w-10 lg:w-12"
       style={{
         position: "absolute",
         outline: "0",

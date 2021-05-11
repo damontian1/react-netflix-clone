@@ -8,7 +8,6 @@ export function AppWrapper({ children }) {
   const [currentMedia, setCurrentMedia] = useState({});
   const [similiarMedia, setSimiliarMedia] = useState([]);
   const [popular, setPopular] = useState([]);
-  const [popularTV, setpopularTV] = useState([]);
   const [latest, setLatest] = useState([]);
   const [upcoming, setUpcoming] = useState([]);
   const [top, setTop] = useState([]);
@@ -26,7 +25,6 @@ export function AppWrapper({ children }) {
     latest,
     upcoming,
     top,
-    popularTV,
     similiarMedia,
     setSimiliarMedia
   }

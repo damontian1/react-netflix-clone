@@ -14,7 +14,7 @@ export default function CarouselLeftArrow({ onClick, ...rest }) {
       onMouseEnter={() => setIsShown(true)}
       onMouseLeave={() => setIsShown(false)}
       onClick={() => onClick()}
-      className="flex items-center justify-center rounded-md left-0 z-10 invisible"
+      className="flex items-center justify-center sm:rounded-md left-0 z-10 invisible"
       style={{
         position: "absolute",
         outline: "0",

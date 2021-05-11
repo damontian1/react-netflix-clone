@@ -10,7 +10,7 @@ export default function MediaCarousel(props) {
   const category = props.category;
   return (
     <div className="mb-8">
-      <span className="font-semibold mb-1 inline-block capitalize text-2xl text-white">{category !== "top" ? category : `Top Picks for Damon`}</span>
+      <span className="font-bold mb-1 inline-block capitalize text-2xl text-white">{category !== "top" ? category : `Top Picks for Damon`}</span>
       <Carousel
         partialVisible
         infinite
@@ -19,6 +19,8 @@ export default function MediaCarousel(props) {
         customLeftArrow={<CarouselLeftArrow />}
         deviceType="mobile"
         itemClass="px-0.5"
+        swipeable={true}
+        minimumTouchDrag="3"
         responsive={{
           mobile: {
             breakpoint: { max: 640, min: 0 },
@@ -41,8 +43,9 @@ export default function MediaCarousel(props) {
               >
                 <a
                   onClick={() => {
+                    state.setCurrentMedia(item);
+                    localStorage.setItem("currentMedia", JSON.stringify(item));
                     state.setVisible(true);
-                    state.setCurrentMedia(item)
                   }}
                   className="overflow-hidden inline-block rounded-sm relative h-full">
                   <img src="/react-netflix-clone/logo-small.png" alt="" className="absolute mx-1 my-2 w-5" />
