@@ -1,4 +1,6 @@
 module.exports = {
-  basePath: '/react-netflix-clone',
-  assetsPrefix: '/react-netflix-clone'
+  basePath: process.env.basePath,
+  env: {
+    assetPrefix: process.env.assetPrefix
+  }
 }

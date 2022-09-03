@@ -11,8 +11,11 @@ export default function Index() {
   const router = useRouter()
   const { slug } = router.query
   const [currentPageMedia, setCurrentPageMedia] = useState("");
+  const [similiarMediaStored, setSimiliarMediaStored] = useState("");
 
   useEffect(() => {
+    let similiarMedia = JSON.parse(localStorage.getItem('similiarMedia'));
+    setSimiliarMediaStored(similiarMedia);
     if (!slug) {
       const currentMedia = JSON.parse(localStorage.getItem('currentMedia'))
       setCurrentPageMedia(currentMedia);
@@ -27,14 +30,17 @@ export default function Index() {
   }, [])
 
   return (
-    <div className="bg-black pb-20">
+    <div className="bg-black h-full w-full">
       <div style={{ backgroundImage: "-webkit-linear-gradient(top,rgba(0,0,0,.8) 40%,rgba(0,0,0,0))" }} className="absolute h-32 top-0 w-full z-30"></div>
       <MobileHeader />
-      { currentPageMedia && (<div className="bg-black text-white">
-        <div className="max-w-md mx-auto">
+      {currentPageMedia && (<div className="bg-black text-white">
+
+        <div className="max-w-3xl mx-auto pb-20">
+
           <img src={`https://image.tmdb.org/t/p/original/${currentPageMedia.backdrop_path}`} alt="" style={{ height: "400px" }} className="mb-4 w-full object-cover" />
-          <div className="px-4 py-4">
-            <img src="/react-netflix-clone/logo-film.png" alt="" className="w-20 mb-1" />
+
+          <div className="px-4 py-4 mb-10">
+            <img src={`${process.env.assetPrefix}logo-film.png`} alt="" className="w-20 mb-1" />
             <h1 className="font-extrabold text-3xl mb-2 leading-10">{currentPageMedia.title}</h1>
             <div className="flex items-center mb-3 space-x-3 text-xs">
               <span className="text-green-400 font-bold">{Math.round(currentPageMedia.vote_average * 10)}% Match</span>
@@ -63,22 +69,68 @@ export default function Index() {
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 mb-2" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                 </svg>
-                <span className="text-white text-sm text-gray-500">My List</span>
+                <span className="text-white text-sm">My List</span>
               </button>
               <button className="flex flex-col items-center justify-between">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 mb-2" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
                 </svg>
-                <span className="text-white text-sm text-gray-500">Rate</span>
+                <span className="text-white text-sm">Rate</span>
               </button>
               <button className="flex flex-col items-center justify-between">
                 <svg viewBox="0 0 23 23" className="h-6 mb-2">
                   <path stroke="#FFF" strokeWidth="1.8" d="M21.114 2.24L3.083 8.957l4.867 1.87 2.608 1.003L20.5 3l-9.349 9.394 1.254 3.262 1.638 4.261z" />
                 </svg>
-                <span className="text-white text-sm text-gray-500">Share</span>
+                <span className="text-white text-sm">Share</span>
               </button>
             </div>
           </div>
+
+          <div>
+            <div className="px-4 text-white">
+              <h2 className="mb-2 text-xl font-semibold">More Like This</h2>
+              <div className="flex flex-wrap -mx-2 h-full overflow-scroll">
+                {
+                  similiarMediaStored && similiarMediaStored.map((item, index) => {
+                    return (
+                      <div key={index} className="flex flex-col w-1/2 py-3 overflow-hidden px-2">
+                        {item.backdrop_path
+                          ? (
+                            <div className="relative h-40">
+                              <img src={`https://image.tmdb.org/t/p/w500${item.backdrop_path}`} alt="" className="rounded-sm h-full object-cover w-full" />
+                              <h2 className="absolute right-1 px-1 py-1 bottom-1 font-bold uppercase text-right text-xl w-3/4 text-shadow-1 text-shadow-2 leading-none font-custom">{item.title}</h2>
+                            </div>
+                          )
+                          : (
+                            <div className="relative h-40">
+                              <img src={`${process.env.assetPrefix}missing-poster.jpg`} alt="" className="rounded-sm h-full object-cover w-full" />
+                              <h2 className="absolute right-1 px-1 py-1 bottom-1 font-bold uppercase text-right text-xl w-3/4 text-shadow-1 text-shadow-2 leading-none font-custom">{item.title}</h2>
+                            </div>
+                          )
+                        }
+                        <div style={{ backgroundColor: "hsl(0deg 0% 15%)" }} className="p-4 rounded-bl-sm rounded-br-sm h-full max-h-60 overflow-hidden overflow-ellipsis flex-1">
+                          <div className="flex items-center justify-between mb-4">
+                            <span className="text-green-400 font-bold">{Math.round(item.vote_average * 10)}% Match</span>
+                            <button className="rounded-full border-2 border-gray-200 bg-gray-900 w-8 h-8 flex items-center justify-center">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="w-4" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                              </svg>
+                            </button>
+                          </div>
+                          {item.overview
+                            ? <p className="text-xs md:text-sm">{item.overview.substr(0, 200)}...</p>
+                            : <p className="text-xs md:text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis cupiditate at itaque neque, adipisci voluptatum voluptate molestias nisi numquam quia iste ipsa consequuntur tempore rem veniam.</p>
+                          }
+                        </div>
+                      </div>
+                    )
+                  })
+                }
+              </div>
+            </div>
+          </div>
+
+
         </div>
       </div>)}
       <MobileFooter />

@@ -4,14 +4,19 @@ export default function DesktopHeader() {
       <nav className="flex justify-between items-center">
         <div className="flex">
           <div className="pr-4">
-            <img src="/react-netflix-clone/logo.png" alt="" className="w-24" />
+            <img src={`${process.env.assetPrefix}logo.png`} alt="" className="w-24" />
           </div>
-          <div>
-            <a href="#" className="px-2 text-xs text-gray-300">Home</a>
-            <a href="#" className="px-2 text-xs text-gray-300">TV Shows</a>
-            <a href="#" className="px-2 text-xs text-gray-300">Movies</a>
-            <a href="#" className="px-2 text-xs text-gray-300">New & Popular</a>
-            <a href="#" className="px-2 text-xs text-gray-300">My List</a>
+          <div className="hidden md:block">
+            <a href="#" className="px-2 text-sm text-gray-300">Home</a>
+            <a href="#" className="px-2 text-sm text-gray-300">TV Shows</a>
+            <a href="#" className="px-2 text-sm text-gray-300">Movies</a>
+            <a href="#" className="px-2 text-sm text-gray-300">New & Popular</a>
+          </div>
+          <div className="md:hidden flex items-center focus:outline-none flex-shrink-0">
+            <a href="#" className="px-2 text-sm text-gray-300">Browse</a>
+            <svg className="text-white w-3 h-3" viewBox="0 0 320 512">
+              <path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z" />
+            </svg>
           </div>
         </div>
         <div className="flex">
@@ -30,8 +35,8 @@ export default function DesktopHeader() {
               <path fill="currentColor" d="M224 512c35.32 0 63.97-28.65 63.97-64H160.03c0 35.35 28.65 64 63.97 64zm215.39-149.71c-19.32-20.76-55.47-51.99-55.47-154.29 0-77.7-54.48-139.9-127.94-155.16V32c0-17.67-14.32-32-31.98-32s-31.98 14.33-31.98 32v20.84C118.56 68.1 64.08 130.3 64.08 208c0 102.3-36.15 133.53-55.47 154.29-6 6.45-8.66 14.16-8.61 21.71.11 16.4 12.98 32 32.1 32h383.8c19.12 0 32-15.6 32.1-32 .05-7.55-2.61-15.27-8.61-21.71z" />
             </svg>
           </button>
-          <button className="px-3 flex space-x-1 items-center focus:outline-none">
-            <img src="/react-netflix-clone/damon.jpeg" alt="" className="w-6 h-6 rounded-full" />
+          <button className="px-3 flex space-x-1 items-center focus:outline-none flex-shrink-0">
+            <img src={`${process.env.assetPrefix}damon.jpeg`} alt="" className="w-6 h-6 rounded-full" />
             <svg className="text-white w-3 h-3" viewBox="0 0 320 512">
               <path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z" />
             </svg>

@@ -3,7 +3,6 @@ import MobileView from '../components/MobileView';
 import DesktopView from '../components/DesktopView';
 
 export default function Home() {
-
   return (
     <div className="bg-black h-full w-full">
       <Head>

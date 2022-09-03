@@ -21,7 +21,7 @@ export default function DesktopView(props) {
                     state.setVisible(false)
                   }}
                   className="bg-black rounded-full p-3 focus:outline-none">
-                  <svg viewBox="0 0 14 14" className="w-4 stroke-current stroke-1 text-white">
+                  <svg viewBox="0 0 14 14" className="w-4 stroke-current stroke-2 text-white">
                     <path d="M1 13L13 1M1 1l12 12" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </button>
@@ -29,11 +29,14 @@ export default function DesktopView(props) {
 
               <div className="w-full h-full relative">
                 <div style={{ height: "400px" }} className="w-full h-full">
-                  <img src={`https://image.tmdb.org/t/p/original/${state.currentMedia.backdrop_path}`} alt="" className="w-full h-full object-cover rounded-tl-lg rounded-tr-lg" />
+                  {state.currentMedia.backdrop_path
+                    ? (<img src={`https://image.tmdb.org/t/p/original/${state.currentMedia.backdrop_path}`} alt="" className="w-full h-full object-cover rounded-tl-lg rounded-tr-lg" />)
+                    : <img src={`${state.currentMedia.backdrop}`} alt="" className="w-full h-full object-cover rounded-tl-lg rounded-tr-lg" />
+                  }
                 </div>
                 <div className="text-white px-12 absolute top-2/3 transform -translate-y-1/2">
                   <div className="mb-16">
-                    <img src="/react-netflix-clone/logo-film.png" alt="" className="w-20 mb-2 text-shadow-1 text-shadow-2" />
+                    <img src={`${process.env.assetPrefix}logo-film.png`} alt="" className="w-20 mb-2 text-shadow-1 text-shadow-2" />
                     <h1 className="text-4xl font-extrabold mb-4 inline-block py-0.5 text-shadow-1 text-shadow-2">{state.currentMedia.title}</h1>
                     <div className="flex space-x-1.5">
                       <button className="flex items-center px-5 py-1.5 space-x-2.5 bg-white rounded-md text-black">
@@ -86,12 +89,22 @@ export default function DesktopView(props) {
                     {
                       state.similiarMedia && state.similiarMedia.map((item, index) => {
                         return (
-                          <div key={index} className="w-1/3 py-3 overflow-hidden px-2">
-                            <div className="relative">
-                              <img src={`https://image.tmdb.org/t/p/w500/${item.backdrop_path}`} alt="" className="rounded-sm" />
-                              <h2 className="absolute right-1 px-1 py-1 bottom-1 font-bold uppercase text-right text-xl w-3/4 text-shadow-1 text-shadow-2 leading-none font-custom">{item.title}</h2>
-                            </div>
-                            <div style={{ backgroundColor: "hsl(0deg 0% 15%)" }} className="mb-4 p-4 rounded-bl-sm rounded-br-sm h-full max-h-60 overflow-hidden overflow-ellipsis">
+                          <div key={index} className="flex flex-col w-1/3 py-3 overflow-hidden px-2">
+                            {item.backdrop_path
+                              ? (
+                                <div className="relative h-52">
+                                  <img src={`https://image.tmdb.org/t/p/w500${item.backdrop_path}`} alt="" className="rounded-sm h-full object-cover w-full" />
+                                  <h2 className="absolute right-1 px-1 py-1 bottom-1 font-bold uppercase text-right text-xl w-3/4 text-shadow-1 text-shadow-2 leading-none font-custom">{item.title}</h2>
+                                </div>
+                              )
+                              : (
+                                <div className="relative h-52">
+                                  <img src={`${process.env.assetPrefix}missing-poster.jpg`} alt="" className="rounded-sm h-full object-cover w-full" />
+                                  <h2 className="absolute right-1 px-1 py-1 bottom-1 font-bold uppercase text-right text-xl w-3/4 text-shadow-1 text-shadow-2 leading-none font-custom">{item.title}</h2>
+                                </div>
+                              )
+                            }
+                            <div style={{ backgroundColor: "hsl(0deg 0% 15%)" }} className="mb-4 p-4 rounded-bl-sm rounded-br-sm h-full max-h-60 overflow-hidden overflow-ellipsis flex-1">
                               <div className="flex items-center justify-between mb-4">
                                 <span className="text-green-400 font-bold">{Math.round(item.vote_average * 10)}% Match</span>
                                 <button className="rounded-full border-2 border-gray-200 bg-gray-900 w-8 h-8 flex items-center justify-center">
@@ -100,7 +113,10 @@ export default function DesktopView(props) {
                                   </svg>
                                 </button>
                               </div>
-                              <p className="text-sm">{item.overview.substr(0, 200)}...</p>
+                              {item.overview
+                                ? <p className="text-xs md:text-sm">{item.overview.substr(0, 200)}...</p>
+                                : <p className="text-xs md:text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis cupiditate at itaque neque, adipisci voluptatum voluptate molestias nisi numquam quia iste ipsa consequuntur tempore rem veniam.</p>
+                              }
                             </div>
                           </div>
                         )
@@ -118,12 +134,11 @@ export default function DesktopView(props) {
       <div className="page__container mx-auto bg-black text-white h-full">
         <DesktopHeader />
         <div style={{ height: "50vw", maxHeight: "580px" }} className="h-full w-full inset-0 relative">
-          <img src="/react-netflix-clone/banner.jpg" alt="" className="h-full w-full object-cover" />
+          <div style={{ width: "100%", filter: "brightness(0.82)", height: "100%", backgroundSize: "cover", backgroundImage: `url(${process.env.assetPrefix}woo-banner2.jpeg)` }} className="bg-center"></div>
           <div className="absolute bg-gradient-to-t bottom-0 from-black h-20 md:h-40 w-full z-0"></div>
-          <div className="-translate-y-1/2 absolute max-w-md px-8 top-1/2 transform">
-            <img src="/react-netflix-clone/logo-film.png" alt="" className="w-20 mb-3" />
-            <h1 className="font-extrabold text-5xl mb-6 leading-10">Shadow and Bone</h1>
-            <p className="leading-tight mb-10">Dark forces conspire against orphan mapmaker Alina Starkov when she unleashes an extraordinary power that could change the fate of her war-torn world.</p>
+          <div className="-translate-y-1/2 absolute max-w-md lg:max-w-3xl px-8 top-1/2 transform">
+            <img src={`${process.env.assetPrefix}woo-title.png`} alt="" className="mb-3" />
+            <p className="text-xs md:text-base leading-tight mb-5 text-shadow-2">Brilliant attorney Woo Young-woo tackles challenges in the courtroom and beyond as a newbie at a top law firm and a woman on the autism spectrum.</p>
             <div className="flex space-x-2">
               <button className="flex items-center px-7 py-2 space-x-2.5 bg-white rounded-md text-black">
                 <svg className="w-3 h-3 fill-current" viewBox="0 0 448 513">
@@ -131,7 +146,7 @@ export default function DesktopView(props) {
                 </svg>
                 <span className="text-sm font-semibold">Play</span>
               </button>
-              <button className="flex items-center px-7 py-2 space-x-2.5 bg-gray-600 rounded-md text-white">
+              <button className="bg-black bg-opacity-90 flex items-center px-7 py-2 rounded-md space-x-2.5 text-white">
                 <svg className="text-white w-3 h-3 fill-current" viewBox="0 0 496 496">
                   <path d="M248 0C111.043 0 0 111.083 0 248c0 136.997 111.043 248 248 248s248-111.003 248-248C496 111.083 384.957 0 248 0zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z" />
                 </svg>
@@ -140,15 +155,15 @@ export default function DesktopView(props) {
             </div>
           </div>
         </div>
-        <div className="-mt-32 relative sm:-mt-0">
+        <div className="lg:-mt-20 md:-mt-4 pb-4 relative">
           <div className="pl-8">
             <MediaCarousel category="top" />
             <MediaCarousel category="popular" />
             <MediaCarousel category="upcoming" />
-            <MediaCarousel category="latest" />
+            <MediaCarousel category="myList" />
           </div>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
