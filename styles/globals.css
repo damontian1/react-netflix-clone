@@ -1,21 +1,36 @@
 @tailwind base;
 @tailwind components;
-html, body {
+
+html,
+body {
   height: 100%;
 }
-body > div {
+
+body>div {
   height: 100%;
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 .react-multiple-carousel__arrow--right {
   right: 0 !important;
   border-top-left-radius: 0.375rem !important;
   border-bottom-left-radius: 0.375rem !important;
 }
+
 .react-multiple-carousel__arrow--left {
   left: 0 !important;
   border-top-left-radius: 0.375rem !important;
   border-bottom-left-radius: 0.375rem !important;
 }
+
 .react-multiple-carousel__arrow {
   position: absolute;
   outline: 0;
@@ -23,19 +38,22 @@ body > div {
   border-radius: 0% !important;
   z-index: 1000;
   border: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   min-width: 62px !important;
   height: 100%;
   opacity: 1;
   cursor: pointer;
 }
+
 .react-multiple-carousel__arrow::before {
   font-size: 30px !important;
   font-weight: bolder;
 }
+
 button.react-multiple-carousel__arrow:focus {
   outline: 0 !important;
 }
+
 /* .react-multi-carousel-item {
   max-width: 230px;
   max-height: 230px;
@@ -43,17 +61,29 @@ button.react-multiple-carousel__arrow:focus {
 .font-custom {
   font-family: 'Bebas Neue';
 }
+
 .text-shadow-1 {
-  text-shadow: 6px 6px 0px rgba(0,0,0,0.2);
+  text-shadow: 6px 6px 0px rgba(0, 0, 0, 0.2);
 }
+
 .text-shadow-2 {
-  text-shadow: 0px 4px 3px rgba(0,0,0,0.4), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);
+  text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.4), 0px 8px 13px rgba(0, 0, 0, 0.1), 0px 18px 23px rgba(0, 0, 0, 0.1);
 }
+
 .scale {
   animation: scaleIn 0.25s ease-in-out;
 }
+
 @keyframes scaleIn {
-  from { transform: scale(0.9); opacity: 0 }
-  to { transform: scale(1); opacity: 1 }
+  from {
+    transform: scale(0.9);
+    opacity: 0
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1
+  }
 }
+
 @tailwind utilities;
