@@ -12,7 +12,7 @@ export default function DesktopView(props) {
           onClick={(e) => { e.target.id === "modal-desktop__outside" ? state.setVisible(false) : "" }}
           style={{ backgroundColor: "rgb(0 0 0 / 75%)", transition: "ease-in 5s" }}
           id="modal-desktop__outside"
-          className="fixed h-full inset-0 border- mx-auto z-50 overflow-scroll">
+          className="fixed h-full inset-0 border- mx-auto z-50 overflow-auto">
           <div className={`bg-black max-w-5xl mt-6 mx-auto pb-6 rounded-md ${state.visible ? "scale" : "hidden"}`}>
             <div className="relative">
               <div className="absolute top-0 right-0 p-4 text-white z-10">
@@ -31,7 +31,7 @@ export default function DesktopView(props) {
                 <div style={{ height: "400px" }} className="w-full h-full">
                   {state.currentMedia.backdrop_path
                     ? (<img src={`https://image.tmdb.org/t/p/original/${state.currentMedia.backdrop_path}`} alt="" className="w-full h-full object-cover rounded-tl-lg rounded-tr-lg" />)
-                    : <img src={`${state.currentMedia.backdrop}`} alt="" className="w-full h-full object-cover rounded-tl-lg rounded-tr-lg" />
+                    : <img src={`${process.env.assetPrefix}missing-poster.jpg`} alt="" className="w-full h-full object-cover rounded-tl-lg rounded-tr-lg" />
                   }
                 </div>
                 <div className="text-white px-12 absolute top-2/3 transform -translate-y-1/2">
@@ -71,12 +71,20 @@ export default function DesktopView(props) {
                   <div className="mb-16">
                     <div>
                       <div className="flex items-center mb-3 space-x-3 text-base">
-                        <span className="text-green-400 font-bold">{state.currentMedia.vote_average * 10}% Match</span>
-                        <span>{state.currentMedia.release_date.substr(0, 4)}</span>
-                        <span className="border border-gray-600 px-1 p-0.5">{state.currentMedia.adult ? "Rated-PG13" : "Rated-R"}</span>
-                        <span className="border border-gray-600 p-0.5">1080P HD</span>
+                        <span className="text-green-400 font-bold">
+                          {(state.currentMedia?.vote_average * 10)?.toFixed(0)}% Match
+                        </span>
+                        <span>
+                          {state.currentMedia?.release_date?.substr(0, 4) ?? state.currentMedia?.first_air_date?.substr(0, 4)}
+                        </span>
+                        <span className="border border-gray-600 px-1 p-0.5">
+                          {state.currentMedia?.adult ? "Rated-PG13" : "Rated-R"}
+                        </span>
+                        <span className="border border-gray-600 p-0.5">
+                          1080P HD
+                        </span>
                       </div>
-                      <p className="leading-tight mb-4 text-white">{state.currentMedia.overview}</p>
+                      <p className="leading-tight mb-4 text-white">{state.currentMedia?.overview}</p>
                     </div>
                   </div>
                 </div>
@@ -84,23 +92,23 @@ export default function DesktopView(props) {
 
               <div className="relative">
                 <div className="px-12 text-white">
-                  <h2 className="mb-4 text-xl font-semibold">More Like This</h2>
-                  <div className="flex flex-wrap -mx-2 h-full overflow-scroll">
+                  {state.similarMedia.length > 0 && (<h2 className="mb-4 text-xl font-semibold">More Like This</h2>)}
+                  <div className="flex flex-wrap -mx-2 h-full overflow-auto">
                     {
-                      state.similiarMedia && state.similiarMedia.map((item, index) => {
+                      state.similarMedia && state.similarMedia.map((item, index) => {
                         return (
                           <div key={index} className="flex flex-col w-1/3 py-3 overflow-hidden px-2">
                             {item.backdrop_path
                               ? (
                                 <div className="relative h-52">
                                   <img src={`https://image.tmdb.org/t/p/w500${item.backdrop_path}`} alt="" className="rounded-sm h-full object-cover w-full" />
-                                  <h2 className="absolute right-1 px-1 py-1 bottom-1 font-bold uppercase text-right text-xl w-3/4 text-shadow-1 text-shadow-2 leading-none font-custom">{item.title}</h2>
+                                  <h2 className="absolute right-1 px-1 py-1 bottom-1 font-bold uppercase text-right text-xl w-3/4 text-shadow-1 text-shadow-2 leading-none font-custom">{item.title ?? item.name}</h2>
                                 </div>
                               )
                               : (
                                 <div className="relative h-52">
                                   <img src={`${process.env.assetPrefix}missing-poster.jpg`} alt="" className="rounded-sm h-full object-cover w-full" />
-                                  <h2 className="absolute right-1 px-1 py-1 bottom-1 font-bold uppercase text-right text-xl w-3/4 text-shadow-1 text-shadow-2 leading-none font-custom">{item.title}</h2>
+                                  <h2 className="absolute right-1 px-1 py-1 bottom-1 font-bold uppercase text-right text-xl w-3/4 text-shadow-1 text-shadow-2 leading-none font-custom">{item.title ?? item.name}</h2>
                                 </div>
                               )
                             }

@@ -1,31 +1,22 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useAppContext } from '../../context/state';
-import axios from 'axios'
-import { useState } from 'react';
 import MobileHeader from '../../components/MobileHeader'
 import MobileFooter from '../../components/MobileFooter';
 
 export default function Index() {
   const state = useAppContext();
   const router = useRouter()
-  const { slug } = router.query
-  const [currentPageMedia, setCurrentPageMedia] = useState("");
-  const [similiarMediaStored, setSimiliarMediaStored] = useState("");
+  const { slug, id } = router.query
 
   useEffect(() => {
-    let similiarMedia = JSON.parse(localStorage.getItem('similiarMedia'));
-    setSimiliarMediaStored(similiarMedia);
-    if (!slug) {
-      const currentMedia = JSON.parse(localStorage.getItem('currentMedia'))
-      setCurrentPageMedia(currentMedia);
-    } else if (slug) {
-      let url = `https://api.themoviedb.org/3/search/multi?api_key=631627e688738d84a1cae51aa035b23a&query=${slug}`
-      axios
-        .get(url)
-        .then(response => {
-          setCurrentPageMedia(response.data.results[0]);
-        })
+    let url = `https://api.themoviedb.org/3/movie/${id}`
+    let pageWasReloaded = !slug;
+    if (pageWasReloaded) {
+      const currentMedia = JSON.parse(localStorage.getItem('currentMedia'));
+      const similarMedia = JSON.parse(localStorage.getItem('similarMedia'));
+      state.setCurrentMedia(currentMedia);
+      state.setSimilarMedia(similarMedia);
     }
   }, [])
 
@@ -33,20 +24,28 @@ export default function Index() {
     <div className="bg-black h-full w-full">
       <div style={{ backgroundImage: "-webkit-linear-gradient(top,rgba(0,0,0,.8) 40%,rgba(0,0,0,0))" }} className="absolute h-32 top-0 w-full z-30"></div>
       <MobileHeader />
-      {currentPageMedia && (<div className="bg-black text-white">
+      {state.currentMedia && (<div className="bg-black text-white">
 
         <div className="max-w-3xl mx-auto pb-20">
 
-          <img src={`https://image.tmdb.org/t/p/original/${currentPageMedia.backdrop_path}`} alt="" style={{ height: "400px" }} className="mb-4 w-full object-cover" />
+          <img src={`https://image.tmdb.org/t/p/original/${state.currentMedia.backdrop_path}`} alt="" style={{ height: "400px" }} className="mb-4 w-full object-cover" />
 
           <div className="px-4 py-4 mb-10">
             <img src={`${process.env.assetPrefix}logo-film.png`} alt="" className="w-20 mb-1" />
-            <h1 className="font-extrabold text-3xl mb-2 leading-10">{currentPageMedia.title}</h1>
+            <h1 className="font-extrabold text-3xl mb-2 leading-10">{state.currentMedia.title}</h1>
             <div className="flex items-center mb-3 space-x-3 text-xs">
-              <span className="text-green-400 font-bold">{Math.round(currentPageMedia.vote_average * 10)}% Match</span>
-              <span>{currentPageMedia.release_date.substr(0, 4)}</span>
-              <span className="border border-gray-600 px-1 p-0.5">{currentPageMedia.adult ? "Rated-PG13" : "Rated-R"}</span>
-              <span className="border border-gray-600 p-0.5">1080P HD</span>
+              <span className="text-green-400 font-bold">
+                {(state.currentMedia?.vote_average * 10)?.toFixed(0)}% Match
+              </span>
+              <span>
+                {state.currentMedia?.release_date?.substr(0, 4) ?? state.currentMedia?.first_air_date?.substr(0, 4)}
+              </span>
+              <span className="border border-gray-600 px-1 p-0.5">
+                {state.currentMedia.adult ? "Rated-PG13" : "Rated-R"}
+              </span>
+              <span className="border border-gray-600 p-0.5">
+                1080P HD
+              </span>
             </div>
             <div className="flex flex-col space-y-3 mb-4">
               <button className="flex items-center justify-center px-7 py-2 space-x-2.5 bg-white rounded-sm text-black">
@@ -63,7 +62,7 @@ export default function Index() {
               </button>
 
             </div>
-            <p className="leading-tight mb-4">{currentPageMedia.overview}</p>
+            <p className="leading-tight mb-4">{state.currentMedia.overview}</p>
             <div className="flex items-center space-x-10">
               <button className="flex flex-col items-center justify-between">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 mb-2" viewBox="0 0 24 24" stroke="currentColor">
@@ -89,9 +88,9 @@ export default function Index() {
           <div>
             <div className="px-4 text-white">
               <h2 className="mb-2 text-xl font-semibold">More Like This</h2>
-              <div className="flex flex-wrap -mx-2 h-full overflow-scroll">
+              <div className="flex flex-wrap -mx-2 h-full overflow-auto">
                 {
-                  similiarMediaStored && similiarMediaStored.map((item, index) => {
+                  state.similarMedia && state.similarMedia.map((item, index) => {
                     return (
                       <div key={index} className="flex flex-col w-1/2 py-3 overflow-hidden px-2">
                         {item.backdrop_path

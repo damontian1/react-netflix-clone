@@ -14,14 +14,13 @@ export default function CarouselLeftArrow({ onClick, ...rest }) {
       onMouseEnter={() => setIsShown(true)}
       onMouseLeave={() => setIsShown(false)}
       onClick={() => onClick()}
-      className="flex items-center justify-center sm:rounded-md left-0 z-10 invisible"
+      className="carousel__button flex items-center justify-center left-0 z-10"
       style={{
         position: "absolute",
         outline: "0",
         transition: "all .5s",
         border: "0",
         background: "rgba(0,0,0,0.5)",
-        width: "12.5%",
         height: "100%",
         opacity: "1",
         cursor: "pointer"

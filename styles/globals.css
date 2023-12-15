@@ -54,10 +54,6 @@ button.react-multiple-carousel__arrow:focus {
   outline: 0 !important;
 }
 
-/* .react-multi-carousel-item {
-  max-width: 230px;
-  max-height: 230px;
-} */
 .font-custom {
   font-family: 'Bebas Neue';
 }
@@ -74,6 +70,10 @@ button.react-multiple-carousel__arrow:focus {
   animation: scaleIn 0.25s ease-in-out;
 }
 
+.carousel__button {
+  width: 10%
+}
+
 @keyframes scaleIn {
   from {
     transform: scale(0.9);
@@ -83,6 +83,12 @@ button.react-multiple-carousel__arrow:focus {
   to {
     transform: scale(1);
     opacity: 1
+  }
+}
+
+@media (max-width: 992px) {
+  .carousel__button {
+    width: 12.5%
   }
 }
 
