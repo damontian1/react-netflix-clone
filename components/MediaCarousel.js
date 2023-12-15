@@ -24,7 +24,7 @@ export default function MediaCarousel(props) {
         customRightArrow={<CarouselRightArrow />}
         customLeftArrow={<CarouselLeftArrow />}
         deviceType="desktop"
-        itemClass="px-0.5"
+        itemClass="px-0.5 h-1/3"
         renderButtonGroupOutside={true}
         responsive={{
           super_desktop: {
