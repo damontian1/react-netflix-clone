@@ -53,7 +53,7 @@ export default function MediaCarousel(props) {
             return (
               <button
                 key={index}
-                className="w-full h-full focus:outline-none"
+                className="w-full focus:outline-none"
                 onClick={() => {
                   let similarMoviesUrl = `https://api.themoviedb.org/3/movie/${item.id}/similar`;
                   let similarShowsUrl = `https://api.themoviedb.org/3/tv/${item.id}/similar`;
